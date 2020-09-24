@@ -2,9 +2,9 @@
 #include <stdlib.h>
 void display_menu();
 void get_input(int**,int*);
-void display_array(int*, int size);
+void display_array(const int*, int size);
 void insert_element(int**,int*);
-void delete_element(int*,int*);
+void delete_element(int**,int*);
 int main()
 {
 	int *arr;
@@ -31,7 +31,7 @@ int main()
 					break;
 			case 3: insert_element(&arr, &n);
 					break;
-			case 4: delete_element(arr,&n);
+			case 4: delete_element(&arr,&n);
 					break;
 			case 5: printf("Good bye...\n");
 					break;
@@ -44,7 +44,7 @@ int main()
 void display_menu(){
 	printf("1. Create an array\t2. Display array\t3. Insert\t4. Delete\t5. Exit\n");
 }
-void display_array(int *arr, int size){
+void display_array(const int *arr, int size){
 	if(size==0)
 		printf("No elements to display-ARRAY IS EMPTY\n");
 	else{
@@ -73,24 +73,29 @@ void insert_element(int **a,int *n){
 		printf("Enter the element to be inserted: ");
 		scanf("%d",&e);
 		for(int i=*n;i>idx-1;i--)
-			*(a)[i]=*(a)[i-1];
-		*(a)[idx-1]=e;
+			(*a)[i]=(*a)[i-1];
+		(*a)[idx-1]=e;
 		(*n)++;
 		printf("Element inserted\n");
 	}
 
 }
-void delete_element(int *a,int *n){
-	int idx;
-	printf("Enter the position from which element has to be deleted: ");
-	scanf("%d",&idx);
-	if(idx<1 || idx>*n)
-	
-		printf("Invalid input- position must be from 1 to %d\n",(*n));
+void delete_element(int **a,int *n){
+	if(*n==0)
+		printf("Can't delete elements from an empty array\n");
 	else{
-		for(int i=idx-1;i<(*n)-1;i++)
-			a[i]=a[i+1];
-		a[*n-1]=0;
-		(*n)--;
+		int idx;
+		printf("Enter the position from which element has to be deleted: ");
+		scanf("%d",&idx);
+		if(idx<1 || idx>*n)
+		
+			printf("Invalid input- position must be from 1 to %d\n",(*n));
+		else{
+			for(int i=idx-1;i<(*n)-1;i++)
+				(*a)[i]=(*a)[i+1];
+			(*a)[*n-1]=0;
+			(*n)--;
+		}
+		printf("Element deleted\n");
 	}
 }
