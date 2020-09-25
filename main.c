@@ -11,7 +11,6 @@ int main()
 	arr=NULL;
 	int n=0;
 	int choice;
-//	display_menu();
 	do{
 		display_menu();
 		printf("Enter your choice: ");
